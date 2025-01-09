@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Pets</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #4CAF50;
+            font-size: 2.5rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* Navbar Styles */
+        nav {
+            background-color: #388E3C;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin-right: 30px;
+        }
+
+        nav ul li:last-child {
+            margin-right: 0;
+        }
+
+        nav a {
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #81C784;
+        }
+
+        /* Pet Card Layout */
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .pet-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pet-card h2 {
+            color: #4CAF50;
+        }
+
+        .pet-card .label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .pet-card .value {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .vaccination-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .vaccination-list li {
+            display: inline-block;
+            background-color: #e0f7fa;
+            color: #00796b;
+            border-radius: 5px;
+            margin-right: 8px;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+
+        .maintenance-item, .routine-item {
+            margin-bottom: 10px;
+        }
+
+        .maintenance-item .label, .routine-item .label {
+            color: #00796b;
+        }
+
+        .maintenance-item .value, .routine-item .value {
+            color: #555;
+        }
+
+        /* Edit Form */
+        .edit-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            display: none; /* Hidden initially */
+        }
+
+        .edit-form input, .edit-form select {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .edit-form button {
+            background-color: #388E3C;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .edit-form button:hover {
+            background-color: #81C784;
+        }
+
+        .no-pets {
+            justify-self: center;
+            display: block;
+            font-size: 1.17em;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            font-weight: bold;
+            unicode-bidi: isolate;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <ul>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/view-pets">View Pets</a></li>
+            <li><a href="/add-pet">Add Pet</a></li>
+            <li><a href="/update-pets">Update Pet</a></li>
+            <li><a href="/delete-pet">Delete Pet</a></li>
+        </ul>
+    </nav>
+
+    <h1>Your Pets</h1>
+
+    <div class="container">
+        {{if .Pets}}
+            {{range .Pets}} <!-- Use .Pets to access the list of pets -->
+            <div class="pet-card">
+                <h2>{{.Name}} ({{.Type}})</h2>
+                <p><span class="label">Vet Name:</span> <span class="value">{{.VetName}}</span></p>
+                <p><span class="label">Vet Address:</span> <span class="value">{{.VetAddress}}</span></p>
+                <p><span class="label">Vet Phone:</span> <span class="value">{{.VetPhone}}</span></p>
+                <p><span class="label">Next Vet Visit:</span> <span class="value">{{.NextVetVisit.Format "Jan 2, 2006"}}</span></p>
+                
+                <div>
+                    <span class="label">Vaccinations:</span>
+                    <ul class="vaccination-list">
+                        {{range .Vaccinations}}
+                        <li>{{.}}</li>
+                        {{end}}
+                    </ul>
+                </div>
+
+                <div class="feeding">
+                    <p class="label">Feeding:</p>
+                    <p><span class="label">Frequency:</span> <span class="value">{{.Feeding.Frequency}}</span></p>
+                    <p><span class="label">Food Type:</span> <span class="value">{{.Feeding.FoodType}}</span></p>
+                    <p><span class="label">Treats Quantity:</span> <span class="value">{{.Feeding.TreatsQty}}</span></p>
+                </div>
+
+                <div class="maintenance">
+                    <p class="label">Maintenance:</p>
+                    <div class="maintenance-item">
+                        <p class="label">Clean Litterbox:</p>
+                        <p class="value">{{if .Maintenance.CleanLitterbox.Required}} {{.Maintenance.CleanLitterbox.Frequency}}{{else}}Not Required{{end}}</p>
+                    </div>
+                    <div class="maintenance-item">
+                        <p class="label">Nail Trim:</p>
+                        <p class="value">{{if .Maintenance.NailTrim.Required}} {{.Maintenance.NailTrim.Frequency}}{{else}}Not Required{{end}}</p>
+                    </div>
+                    <div class="maintenance-item">
+                        <p class="label">Brushing:</p>
+                        <p class="value">{{if .Maintenance.Brushing.Required}} {{.Maintenance.Brushing.Frequency}}{{else}}Not Required{{end}}</p>
+                    </div>
+                    <div class="maintenance-item">
+                        <p class="label">Haircut:</p>
+                        <p class="value">{{if .Maintenance.Haircut.Required}} {{.Maintenance.Haircut.Frequency}}{{else}}Not Required{{end}}</p>
+                    </div>
+                </div>
+
+                <div class="routine">
+                    <p class="label">Routine:</p>
+                    <p><span class="label">Walk Time:</span> <span class="value">{{.Routine.WalkTime}}</span></p>
+                    <p><span class="label">Play Time:</span> <span class="value">{{.Routine.PlayTime}}</span></p>
+                </div>
+            </div>
+            {{end}}
+        {{else}}
+             <h2 class="no-pets">No pets available to display.</h2>
+        {{end}}
+    </div>
+    <footer>
+        <p>&copy; 2024 Pet Pals. For educational purposes only.</p>
+    </footer>
+</body>
+</html>

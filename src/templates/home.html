@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Pals</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 3rem;
+            color: #4CAF50;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 20px;
+            width: 250px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card a {
+            display: block;
+            color: #4CAF50;
+            font-size: 1.2rem;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .card a:hover {
+            color: #388E3C;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+        .card h3 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: #388E3C;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to Pet Pals!</h1>
+
+    <div class="container">
+        <div class="card">
+            <h3>View Pets</h3>
+            <a href="/view-pets">See all Pets</a>
+        </div>
+
+        <div class="card">
+            <h3>Add Pet</h3>
+            <a href="/add-pet">Add a new Pet</a>
+        </div>
+
+        <div class="card">
+            <h3>Update Pet</h3>
+            <a href="/update-pets">Update Pet Info</a>
+        </div>
+
+        <div class="card">
+            <h3>Delete Pet</h3>
+            <a href="/delete-pet">Remove a Pet</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Pet Pals. For educational purposes only.</p>
+    </footer>
+
+</body>
+</html>
+
